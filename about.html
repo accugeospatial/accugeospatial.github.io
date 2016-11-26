@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<title>AccuGeospatial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+
+
+<body>
+
+<!-- Navbar (sit on top) -->
+
+<div class="w3-top">
+  <ul class="w3-navbar w3-white w3-wide w3-padding-8 w3-card-2">
+    <li>
+      <a href="home.html" class="w3-margin-left"><img src="https://firebasestorage.googleapis.com/v0/b/accugeospatial-2882a.appspot.com/o/Images%2Flogo.png?alt=media&token=93305a6a-5cab-452a-8442-f725830e0f0a"/></a>
+    </li>
+    <!-- Float links to the right. Hide them on small screens -->
+	<ul class="w3-right w3-navbar w3-white w3-wide w3-padding-8">
+    <li class="w3-left w3-hide-small"><a href="index.html" >Home</a></li>
+	<li class="w3-left w3-hide-small w3-black w3-dropdown-hover"><a href="#">About</a></a>
+	<div class="w3-dropdown-content w3-white w3-card-4">
+        <a href="about.html#vision">Vision</a>
+        <a href="about.html#mission">Mission</a>
+        <a href="about.html#partnership">Patnership</a>
+      </div>
+	</li>
+	<li class="w3-left w3-hide-small"><a href="services.html">Services</a></li>
+	<li class="w3-left w3-hide-small"><a href="apps.html">Apps</a></li>
+	<li class="w3-left w3-hide-small"><a href="contact.html" class="w3-margin-right">Contact</a></li>
+	</ul>
+	 <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    <li>
+      <a href="javascript:void(0)" class="w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+        <i class="fa fa-bars w3-padding-right w3-padding-right"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Sidenav on small screens when clicking the menu icon -->
+<nav class="w3-sidenav w3-white w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-large w3-padding-16">Close ×</a>
+  <a href="index.html" onclick="w3_close()">Home</a>
+  <a href="#" class="w3-light-grey" onclick="w3_close()">About</a>
+  <a href="services.html" onclick="w3_close()">Services</a>
+  <a href="apps.html" onclick="w3_close()">Apps</a>
+  <a href="contact.html" onclick="w3_close()">Contact</a>
+</nav>
+
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px">
+  <!-- About Section -->
+  <div id="about" class="w3-container w3-padding-64">
+    <h4 class="w3-padding-12 "><strong>About</strong></h4>
+    <p style="text-align:justify">Accugeospatial Company Limited is an experienced GIS and GPS solution and service provider focusing on deployment of modern GIS and GPS technology to meet client needs. We have a combined staff professional experience of more than 20 years in the area of GIS, GPS, Database and Application Development. Our professionals have undergone trainings from the world leading Geospatial Industry players and have implemented solutions and services in Ghana, Nigeria, Gambia, Liberia etc. As a key regional player in geographic information engineering, it’s professionals has been involved in the execution of several GIS projects. We offer our expertise to global, national, state, public and private agencies.
+    </p>
+  </div>
+	
+  <div id="vision" class="w3-container w3-padding-64">	
+	<h4 class="w3-padding-12"><strong>Vision</strong></h4>
+	 <p style="text-align:justify">To be the Leader in Geospatial Solution and Services in West Africa</p>
+  </div>
+  
+  <div id="mission" class="w3-container w3-padding-64">
+	 <h4 class="w3-padding-12" ><strong>Mission</strong></h4>
+     <p style="text-align:justify">To remain the #1 GIS Market Solution, Professional Services and Training provider in West Africa, partnering with GIS and GPS global giants, GIS integrators and other HW/SW partners to provide the most optimum solution to improve business processes and solve patialproblem in a sustainable environment.</p>
+  </div>
+ 
+ <div id="partnership" class="w3-container w3-padding-64">
+   <h4 class="w3-padding-12"><strong>Partnership</strong></h4>
+  
+  
+  <div class="w3-border-bottom w3-border-light-grey w3-padding-12">
+       <img src="images/epn2.jpg" alt="mtn" class="w3-panel w3-card-8" style="width:40%">
+	   
+			<p class="w3-large w3-text-blue">Esri Partner Network (EPN) Silver </p>
+			<p style="text-align:justify">AccuGeospatial is an Esri Partner Network (EPN) Silver tier member. The Esri Partner Network is a global network of companies that provide leading-edge solutions and services based on Esri® technology. Esri and its partners work together to bring the best of GIS implementation and solutions to end users. This prestigious rating confirms our renowned experience and professionalism. As Esri partners, we use industry knowledge and ArcGIS Platform expertise to solve your toughest challenges and take your business to the next level. We have expertise in Desktop, Server, Developer, Solutions and ArcGIS Online. Our ArcGIS Online Speciality enables us to help you get up and running quickly and maximise your use of the ArcGIS Platform, as well as tap into the ready-to-use apps, content and services they provide.</p>
+    </div>
+  
+  
+  
+    <div class="w3-border-bottom w3-border-light-grey w3-padding-12 ">
+       <img src="https://firebasestorage.googleapis.com/v0/b/accugeospatial-2882a.appspot.com/o/Images%2Fcarto.jpg?alt=media&token=d6948f12-3fdd-4c3d-936c-a3d5922c0bf7" class="w3-panel w3-card-8" alt="mtn" style="width:22%">
+			<p class="w3-large w3-text-blue">Cartopac Business Partner</p>
+			<p style="text-align:justify">AccuGeospatial is an Esri Partner Network (EPN) Silver tier member. The Esri Partner Network is a global network of companies that provide leading-edge solutions and services based on Esri® technology. Esri and its partners work together to bring the best of GIS implementation and solutions to end users. This prestigious rating confirms our renowned experience and professionalism. As Esri partners, we use industry knowledge and ArcGIS Platform expertise to solve your toughest challenges and take your business to the next level. We have expertise in Desktop, Server, Developer, Solutions and ArcGIS Online. Our ArcGIS Online Speciality enables us to help you get up and running quickly and maximise your use of the ArcGIS Platform, as well as tap into the ready-to-use apps, content and services they provide.</p>
+	</div>
+	
+  
+
+</div>
+
+</div>
+
+</body>
+
+<!-- Footer -->
+
+<footer class="w3-container w3-padding-32 w3-light-grey w3-center">
+  <a href="#" class="w3-btn w3-padding w3-black w3-margin"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+  <div class="w3-xlarge w3-section">
+    <a href="https://www.facebook.com/AccuGeospatial-Company-Limited-318734015177983/?hc_ref=SEARCH&fref=nf" target="blank"><i class="fa fa-facebook-official w3-hover-text-indigo"></i></a>
+    <a href="https://twitter.com/AccuGeo" target="blank"><i class="fa fa-twitter w3-hover-text-light-blue"></i></a>
+    <a href="https://gh.linkedin.com/in/accugeospatial-company-limited-16ab61131" target="blank"><i class="fa fa-linkedin w3-hover-text-indigo"></i></a>
+  </div>
+  <p>© AccuGeospatial Company Limited</p>
+</footer>
+
+<script>
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+
+// Toggle between showing and hiding the sidenav when clicking the menu icon
+var mySidenav = document.getElementById("mySidenav");
+
+function w3_open() {
+    if (mySidenav.style.display === 'block') {
+        mySidenav.style.display = 'none';
+    } else {
+        mySidenav.style.display = 'block';
+    }
+}
+
+// Close the sidenav with the close button
+function w3_close() {
+    mySidenav.style.display = "none";
+}
+</script>
+</html>
+
