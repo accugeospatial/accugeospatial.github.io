@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>  
+<head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+  <title>Ghana Health Facility Locator</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/3.19/dijit/themes/claro/claro.css">    
+  <link rel="stylesheet" href="https://js.arcgis.com/3.19/esri/css/esri.css">
+  
+  <style> 
+    html, body, #map {
+      padding:0;
+      margin:0;
+      height:100%;
+    }
+	
+	 body {
+        background-color:#FFF;
+        overflow:hidden;
+        font-family:"Trebuchet MS";
+      }
+	
+	
+	 #LocateButton {
+      position: absolute;
+      top: 95px;
+      left: 20px;
+      z-index: 50;
+    }
+	
+	
+	 #HomeButton {
+      position: absolute;
+      top: 150px;
+      left: 20px;
+      z-index: 50;
+    }
+	
+	 #info {
+         top: 2px;
+         color: #444;
+         height: auto;
+         font-family: arial;
+         font-weight: bold;
+         left: 69px;
+         margin: 5px;
+         padding: 10px;
+         position: absolute;
+         width: 260px;
+         z-index: 40;
+         border: solid 1px #003300;
+         border-radius: 4px;
+         background-color: #E5E5E5;
+      }
+      #search {
+         display: block;
+         position: absolute;
+         z-index: 2;
+         top: 70px;
+         left: 74px;
+      }
+      /*Beginning of search box modifications*/
+      .arcgisSearch .searchClear {
+         background-color: #E5E5E5;
+      }
+      .arcgisSearch .esriIconZoom {
+         background-image: url("finding.png");
+         background-size: 20px 20px;
+      }
+      .esriIconZoom:before {
+         content: "";
+      }
+      .arcgisSearch .searchGroup .searchInput,
+      .arcgisSearch .searchBtn,
+      .arcgisSearch .noResultsMenu,
+      .arcgisSearch .suggestionsMenu {
+         border: 1px solid #003300;
+         background-color: #E5E5E5;
+      }
+      .arcgisSearch .noValueText {
+         color: red;
+         font-size: 14px;
+      }
+      /*Beginning of popup modifications*/
+      .esriPopup .titlePane {
+         background-color: #003300;
+         border-bottom: 1px solid #121310;
+         font-weight: bold;
+      }
+      .esriPopup a {
+         color: #DAE896;
+      }
+      .esriPopup .contentPane,
+      .esriPopup .actionsPane,
+      .esriPopup .pointer,
+      .esriPopup .outerPointer {
+         background-color: #B3B3B3;
+      }
+	
+  </style> 
+  
+  
+  <script src="https://js.arcgis.com/3.19/"></script>
+    <script> 
+    var map;
+    require([
+      "esri/map", "esri/dijit/HomeButton", "esri/dijit/BasemapGallery", "esri/dijit/LocateButton", "esri/dijit/Scalebar", "esri/layers/FeatureLayer", "esri/dijit/Search",
+      "esri/InfoTemplate", "esri/urlUtils", "esri/dijit/Directions", "esri/arcgis/utils", "dojo/parser",
+
+      "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/TitlePane",
+      "dojo/domReady!"
+    ], function(
+      Map, HomeButton, BasemapGallery, LocateButton, Scalebar, FeatureLayer, Search, InfoTemplate, urlUtils, Directions, arcgisUtils,
+      parser
+    ) {
+      parser.parse();
+	  
+	  
+	  //all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
+        urlUtils.addProxyRule({
+          urlPrefix: "http://route.arcgis.com",
+          proxyUrl: "https://utility.arcgis.com/usrsvcs/appservices/4rcgsdwlrR0CcQGK/rest/services/World/Route/NAServer/Route_World"
+        });
+        urlUtils.addProxyRule({
+          urlPrefix: "http://traffic.arcgis.com",
+          proxyUrl: "https://utility.arcgis.com/usrsvcs/appservices/4rcgsdwlrR0CcQGK/rest/services/World/Route/NAServer/Route_World"
+        });
+
+     //create map
+      map = new Map("map", {
+        basemap: "topo",
+        center: [-1.276177, 7.8312178],
+        zoom: 7
+      });
+	  
+	  
+	  //default will point to ArcGIS world routing service
+        var directions = new Directions({
+          map: map
+          // --------------------------------------------------------------------
+          // New constuctor option and property showSaveButton added at version
+          // 3.17 to allow saving route. For more information see the API Reference.
+          // https://developers.arcgis.com/javascript/3/jsapi/directions-amd.html#showsavebutton
+          //
+          // Uncomment the line below to add the save button to the Directions widget
+          // --------------------------------------------------------------------
+          // , showSaveButton: true
+        },"dir");
+        directions.startup();
+		
+		
+		 var home = new HomeButton({
+        map: map
+      }, "HomeButton");
+      home.startup();
+		
+		 geoLocate = new LocateButton({
+        map: map
+      }, "LocateButton");
+      geoLocate.startup();
+		
+
+      //add the basemap gallery, in this case we'll display maps from ArcGIS.com including bing maps
+      var basemapGallery = new BasemapGallery({
+        showArcGISBasemaps: true,
+        map: map
+      }, "basemapGallery");
+      basemapGallery.startup();
+      
+      basemapGallery.on("error", function(msg) {
+        console.log("basemap gallery error:  ", msg);
+      });
+	  
+	  
+	  //add scale bar
+	  var scalebar = new Scalebar({
+          map: map,
+          // "dual" displays both miles and kilometers
+          // "english" is the default, which displays miles
+          // use "metric" for kilometers
+          scalebarUnit: "dual"
+        });
+		
+		//add feature layer
+		 //ArcGIS Online feature service showing the locations of health facilities in Ghana, 
+         var layer = new FeatureLayer("https://services3.arcgis.com/ws02YueEUND55usQ/arcgis/rest/services/GHFL_Service/FeatureServer/0", {
+            outFields: ["*"]
+         });
+         map.addLayer(layer);
+
+         //Create search widget
+         var search = new Search({
+            map: map,
+            //passing in empty source array to clear defaults such as 
+            //"All" and the ArcGIS Online World Geocoding service
+            sources: [],
+            zoomScale: 5000000
+         }, "search");
+
+         //listen for the load event and set the source properties 
+         search.on("load", function () {
+
+            var sources = search.sources;
+            sources.push({
+               featureLayer: layer,
+               placeholder: "37 Millitary Hospital",
+               enableLabel: false,
+               searchFields: ["FacilityName"],
+               displayField: "FacilityName",
+               exactMatch: false,
+               outFields: ["*"],
+
+               //Create an InfoTemplate and include three fields
+               infoTemplate: new InfoTemplate("${FacilityName}", "Region: ${Region}</br>Distrit: ${District}</br>Type: ${Type_}</br>Town: ${Town}</br>Ownership: ${Ownership}")
+
+            });
+            //Set the sources above to the search widget
+            search.set("sources", sources);
+         });
+         search.startup();
+		
+		
+		
+	  
+    });
+  </script> 
+</head> 
+
+<body class="claro"> 
+
+     <div data-dojo-type="dijit/layout/BorderContainer"
+        
+         style="width:100%;height:100%;">
+      <div data-dojo-type="dijit/layout/ContentPane"
+           data-dojo-props="region:'right', closable:false, open:false"
+           style="width:250px;">
+
+        <div id="dir"></div>
+      </div>
+ 
+    <div id="map" class="map">
+	
+	<div id="HomeButton"></div>
+	
+	<div id="LocateButton"></div>
+	
+	<div id="search"></div>
+   <div id="info">
+      <div>Search a health facility to find its location</div>
+   </div>
+	
+	
+	
+      <div style="position:absolute; left:20px; bottom:100px; z-Index:999;">
+        <div data-dojo-type="dijit/TitlePane" 
+             data-dojo-props="title:'Switch Basemap', closable:false, open:false">
+          <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
+            <div id="basemapGallery"></div>
+          </div>
+        </div>
+      </div>
+	  
+	
+	 
+</body> 
+
+</html>
